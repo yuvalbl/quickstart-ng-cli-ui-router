@@ -1,14 +1,27 @@
-/* tslint:disable:no-unused-variable */
-
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
+import { APP_BASE_HREF } from '@angular/common';
+import { UIRouterModule } from 'ui-router-ng2';
+import { APP_STATES } from './app.states';
 
 describe('AppComponent', () => {
   beforeEach(() => {
+    TestBed.overrideComponent(HomeComponent, {set: {template: 'Home component'}});
     TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
+      imports: [
+        UIRouterModule.forRoot({
+          states: APP_STATES,
+          otherwise: {state: 'home'}
+        })
       ],
+      declarations: [
+        AppComponent,
+        HomeComponent
+      ],
+      providers: [
+        {provide: APP_BASE_HREF, useValue: '/'}
+      ]
     });
   });
 
@@ -24,10 +37,14 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('app works!');
   }));
 
-  it('should render title in a h1 tag', async(() => {
+  it('should have navigation menu with 2 li items', (() => {
     let fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    let compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('app works!');
+    let appElement = fixture.debugElement.nativeElement;
+    let nav = appElement.querySelector('nav');
+    expect(nav).not.toBeNull();
+    let ul = nav.querySelector('ul');
+    expect(ul).not.toBeNull();
+    let li = ul.querySelectorAll('li');
+    expect(li.length).toEqual(2);
   }));
 });

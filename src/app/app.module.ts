@@ -6,6 +6,8 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { HeroesComponent } from './heroes/heroes.component';
+import { UIRouterModule } from 'ui-router-ng2';
+import { APP_STATES } from './app.states';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,11 @@ import { HeroesComponent } from './heroes/heroes.component';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    UIRouterModule.forRoot({
+      states: APP_STATES,
+      otherwise: {state: 'home'}
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
