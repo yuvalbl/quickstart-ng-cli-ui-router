@@ -14,8 +14,10 @@ Spec:
 [ui-router-ng2](https://ui-router.github.io/docs/latest/modules/ng2.html): 1.0.0-beta.3
 
 NOTE:
-as both ng-cli and ui-router-ng2 are currently in beta versions, it is highly recommended 
-to test each of the following steps as you go. to serve the app - use `ng serve` & navigate to `http://localhost:4200/`
+as both ng-cli and ui-router-ng2 are currently in beta versions, it is highly recommended to test each of the following steps as you go.
+
+to serve the app - use `ng serve` & navigate to `http://localhost:4200/`
+
 to test the app using karma - use: `ng test`
 
 # Project creation step by step:
@@ -27,6 +29,7 @@ npm install -g angular-cli
 if ng-cli already installed - make sure you have the latest version.
 To see your current version use `npm list -g angular-cli`. 
 To see the latest angular-cli versions use  `npm info angular-cli version`.
+
 If update required - see [angular-cli update section](https://github.com/angular/angular-cli#updating-angular-cli).
 
 ## 2. Create a new ng-cli project:
