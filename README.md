@@ -4,9 +4,13 @@ This project was generated with [angular-cli](https://github.com/angular/angular
 
 ## Intro
 This project purpose is to provide a quickstart for a project based on angular-cli tool and ui-router-ng2
+
 Spec:
+
 [angular](https://angular.io/docs/ts/latest/): 2.2.1
+
 [angular-cli](https://github.com/angular/angular-cli): 1.0.0-beta.21
+
 [ui-router-ng2](https://ui-router.github.io/docs/latest/modules/ng2.html): 1.0.0-beta.3
 
 NOTE:
