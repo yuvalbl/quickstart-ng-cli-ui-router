@@ -44,7 +44,7 @@ ng g component heroes
 
 ## 5. Set [ui-router basic navigation](https://github.com/ui-router/quickstart-ng2):
 ### 5.1 Add navigation menu and ui-view to `app.component.html`:
-
+```
 <nav role="navigation">
   <ul>
     <li>
@@ -57,6 +57,7 @@ ng g component heroes
 </nav>
 
 <ui-view></ui-view>
+```
 
 ### 5.2 In app folder create `app.states.ts` file with the following state constants:
 ```javascript
