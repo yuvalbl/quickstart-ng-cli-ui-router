@@ -102,91 +102,32 @@ ng g component heroes
 
 Check the app (ng serve) and see everything is loaded correctly
 Note: Test will not work at this stage since the exist jasmine suite doesn't know ui-router states.
-To fix this see the next step.
+To fix this the required dependencies must be included in the TestBed.
+
+The practical solution (for most cases) would be to import the entire 
+AppModule, along with [APP_BASE_HREF](https://angular.io/docs/ts/latest/api/common/index/APP_BASE_HREF-let.html) token.
+To see how to include only the must-have dependencies in your test file - 
+see [set testbed minimal configuration](https://github.com/yuvalbl/quickstart-ng-cli-ui-router/blob/master/notes/set_testbed_minimal_configuration.md) note.
 
 ## 6 modifying `app.component.spec.ts` to work with ui-router.
 ### 6.1 Add to file top:
 ```javascript
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
 import { APP_BASE_HREF } from '@angular/common';
-import { UIRouterModule } from 'ui-router-ng2';
-import { APP_STATES } from './app.states';
+import { AppModule } from './app.module';
 ```
 
-### 6.2 Add imports with app states to TestBed (inside the `beforeEach` call)  
-```javascript
-  TestBed.configureTestingModule({
-    imports: [
-      UIRouterModule.forRoot({
-        states: APP_STATES,
-        otherwise: {state: 'home'}
-      })
-    ],
-    declarations: [
-      AppComponent
-    ],
-  });
-```
-
-### 6.3 Since in this test we will test app component only, without child components, 
-we don't need HomeComponent layout itself (which may contain more sub-components)
-override home component by adding the following before `TestBed.configureTestingModule`:
-```javascript
-  TestBed.overrideComponent(HomeComponent, {set: {template: 'Home component'}});
-  TestBed.configureTestingModule({
-    imports: [
-      UIRouterModule.forRoot({
-        states: APP_STATES,
-        otherwise: {state: 'home'}
-      })
-    ],
-    declarations: [
-      AppComponent
-    ],
-  });
-```
-
-### 6.4 Add HomeComponent to your `TestBed` declarations:
-```javascript
-  TestBed.overrideComponent(HomeComponent, {set: {template: 'Home component'}});
-  TestBed.configureTestingModule({
-    imports: [
-      UIRouterModule.forRoot({
-        states: APP_STATES,
-        otherwise: {state: 'home'}
-      })
-    ],
-    declarations: [
-      AppComponent,
-      HomeComponent
-    ],
-  });
-```
-
-### 6.5 Add APP_BASE_HREF provider to `TestBed.configureTestingModule`. 
-your `beforeEach` should now look like this:
+### 6.2 Configure TestBed to import AppModule  (inside the `beforeEach` call)  
 ```javascript
   beforeEach(() => {
-    TestBed.overrideComponent(HomeComponent, {set: {template: 'Home component'}});
     TestBed.configureTestingModule({
-      imports: [
-        UIRouterModule.forRoot({
-          states: APP_STATES,
-          otherwise: {state: 'home'}
-        })
-      ],
-      declarations: [
-        AppComponent,
-        HomeComponent
-      ],
-      providers: [
-        {provide: APP_BASE_HREF, useValue: '/'}
-      ]
+      imports: [AppModule],
+      providers: [{provide: APP_BASE_HREF, useValue: '/'}]
     });
   });
 ```
 
-remove the last test / modify your tests according to the current layout.
+### 6.3 Modify the tests according to the current layout. 
+
 Run `ng test` to verify everything is solid.

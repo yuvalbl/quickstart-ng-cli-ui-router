@@ -1,27 +1,13 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
 import { APP_BASE_HREF } from '@angular/common';
-import { UIRouterModule } from 'ui-router-ng2';
-import { APP_STATES } from './app.states';
+import { AppModule } from './app.module';
 
 describe('AppComponent', () => {
   beforeEach(() => {
-    TestBed.overrideComponent(HomeComponent, {set: {template: 'Home component'}});
     TestBed.configureTestingModule({
-      imports: [
-        UIRouterModule.forRoot({
-          states: APP_STATES,
-          otherwise: {state: 'home'}
-        })
-      ],
-      declarations: [
-        AppComponent,
-        HomeComponent
-      ],
-      providers: [
-        {provide: APP_BASE_HREF, useValue: '/'}
-      ]
+      imports: [AppModule],
+      providers: [{provide: APP_BASE_HREF, useValue: '/'}]
     });
   });
 
