@@ -1,3 +1,8 @@
 <p>
-  heroes works!
+  My Heroes:
 </p>
+<ul>
+  <li *ngFor="let hero of heroes">
+    <a uiSref="hero.details">{{hero.name}}</a>
+  </li>
+</ul>

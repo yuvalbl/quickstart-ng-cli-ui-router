@@ -5,15 +5,14 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { HeroesComponent } from './heroes/heroes.component';
 import { UIRouterModule } from 'ui-router-ng2';
 import { APP_STATES } from './app.states';
+import { HeroesModule } from './heroes/heroes.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    HeroesComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +21,8 @@ import { APP_STATES } from './app.states';
     UIRouterModule.forRoot({
       states: APP_STATES,
       otherwise: {state: 'home'}
-    })
+    }),
+    HeroesModule
   ],
   providers: [],
   bootstrap: [AppComponent]

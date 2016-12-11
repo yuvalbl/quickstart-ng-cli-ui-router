@@ -131,3 +131,122 @@ import { AppModule } from './app.module';
 ### 6.3 Modify the tests according to the current layout. 
 
 Run `ng test` to verify everything is solid.
+
+## 7 Lets add some content to our heroes component:
+### 7.1 Inside `heroes` folder, add heroes components states file named: `heroes.states.ts`
+### 7.2 Add the following code to the states file you've created:
+ ```javascript
+import { Http } from "@angular/http";
+import { Ng2StateDeclaration } from 'ui-router-ng2';
+import { HeroesComponent } from './heroes.component';
+
+// based on ui-router-ng2 quickstart examples: https://github.com/ui-router/quickstart-ng2
+const HEROES_STATES: Ng2StateDeclaration[] = [
+  {
+    name: 'heroes',
+    url: '/heroes',
+    views: {
+      $default: { component: HeroesComponent },
+    },
+    resolve: [
+      {
+        token: 'heroesList',
+        deps: [Http],
+        resolveFn: (http: Http) => http.get('/data/heroes.json').map(res => res.json()).toPromise()
+      }
+    ]
+  }
+];
+
+export { HEROES_STATES }
+ ```
+ 
+note the resolve functionality, we will use it soon enough.
+
+### 7.3 Inside `heroes` folder, add heroes components states file named: `heroes.module.ts`
+### 7.4 Add the following code to the module file you've created:
+```javascript
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { UIRouterModule } from 'ui-router-ng2';
+import { HEROES_STATES } from './heroes.states';
+import { HeroesComponent } from './heroes.component';
+
+@NgModule({
+  imports: [
+    CommonModule,
+    UIRouterModule.forChild({ states: HEROES_STATES })
+  ],
+  declarations: [
+    HeroesComponent,
+  ]
+})
+export class HeroesModule {}
+```
+### 7.5 You should now modify the `app.module` file. Remove `HeroesComponent` from the declaration section inside your `ngModule`.
+Instead, include `HeroesModule` in your import section.
+Your file should now look like this:
+```javascript
+// imports list...
+import { HeroesModule } from './heroes/heroes.module';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    HomeComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    HttpModule,
+    UIRouterModule.forRoot({
+      states: APP_STATES,
+      otherwise: {state: 'home'}
+    }),
+    HeroesModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+### 7.6 Modify heroes.components.ts so it can accept data from the ui-router resolve function.
+add the Input decorator to your Heroes Components `constructor`:
+```javascript
+// ...
+import {Component, Input} from '@angular/core';
+// ...
+  @Input('heroesList') heroes;
+  constructor() { }
+```
+
+### 7.7 Modify heroes.components.html to display the resolved data:
+```
+<p>
+  My Heroes:
+</p>
+<ul>
+  <li *ngFor="let hero of heroes">
+    <a uiSref="hero.details">{{hero.name}}</a>
+  </li>
+</ul>
+```
+
+### 7.8 Add data json file so the Heroes component will have something to work with.
+In  your src folder, create a new `data` folder. inside of it create `heroes.json` file with some data.
+You can use the following data, which is similar to the data file of angular2 heroes demo:
+```javascript
+[
+  {"id": "11", "name": "Mr. Nice"},
+  {"id": "12", "name": "Narco"},
+  {"id": "13", "name": "Bombasto"},
+  {"id": "14", "name": "Celeritas"},
+  {"id": "15", "name": "Magneta"},
+  {"id": "16", "name": "RubberMan"},
+  {"id": "17", "name": "Dynama"},
+  {"id": "18", "name": "Dr IQ"},
+  {"id": "19", "name": "Magma"},
+  {"id": "20", "name": "Tornado"}
+]
+```
