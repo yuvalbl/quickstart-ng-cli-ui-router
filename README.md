@@ -107,7 +107,7 @@ To fix this the required dependencies must be included in the TestBed.
 The practical solution (for most cases) would be to import the entire 
 AppModule, along with [APP_BASE_HREF](https://angular.io/docs/ts/latest/api/common/index/APP_BASE_HREF-let.html) token.
 To see how to include only the must-have dependencies in your test file - 
-see [set testbed minimal configuration](https://github.com/yuvalbl/quickstart-ng-cli-ui-router/blob/master/notes/set_testbed_minimal_configuration.md) note.
+see [set testbed minimal configuration](https://github.com/yuvalbl/quickstart-ng-cli-ui-router/blob/master/src/notes/set_testbed_minimal_configuration.md) note.
 
 ## 6 modifying `app.component.spec.ts` to work with ui-router.
 ### 6.1 Add to file top:
